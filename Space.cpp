@@ -20,6 +20,12 @@ void Rocket ()
     HDC Space = txLoadImage ("space.bmp");
     if (Space == NULL) txMessageBox ("space.bmp isn't found");
 
+    HDC Face = txLoadImage ("trollface.bmp");
+    if (Face == NULL) txMessageBox ("trollface.bmp isn't found");
+
+    HDC Troll = txLoadImage ("troll.bmp");
+    if (Troll == NULL) txMessageBox ("troll.bmp isn't found");
+
     int RocketM = txGetExtentX (Rocket);
 
     int SpaceX = txGetExtentX (Space);
@@ -49,7 +55,9 @@ void Rocket ()
 
         Win32::AlphaBlend (txDC (), RocketX, RocketY, hDest, wDest, Rocket, SourceX, 0, 450, 450, blend);
 
-        printf ("старый идиот %d\n", MouseY - RocketY);
+        printf ("сахарная батарея %d%d\n", hDest, wDest);
+
+       // printf ("старый идиот %d\n", MouseY - RocketY);
 
         if (MouseX - RocketX < 0)
             {
@@ -68,8 +76,18 @@ void Rocket ()
 
         RocketY = MouseY;
 
+        if (hDest > 600 && wDest > 600)
+            {
+            txAlphaBlend (txDC (), RocketX, RocketY, 0, 0, Face);
+            }
 
-        if (GetAsyncKeyState (VK_LEFT))
+        if (hDest >100 && wDest > 100)
+            {
+            txAlphaBlend (txDC (), RocketX, RocketY, 0, 0, Troll);
+            }
+
+
+        if (GetAsyncKeyState (VK_CONTROL))
             {
             hDest = hDest + Sizing;
             wDest = wDest + Sizing;
